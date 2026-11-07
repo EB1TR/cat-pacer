@@ -1,0 +1,8 @@
+# Carpetas excluídas
+.idea/
+venv/
+build/
+dist/
+
+# Ficheros excluídos
+config.json
