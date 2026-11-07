@@ -18,6 +18,8 @@ Se aceptan tramas ASCII terminadas en `;` con uno de estos prefijos:
 
 Las tramas desconocidas o mal formadas se descartan. El buffer de entrada esta
 limitado a 4096 bytes para impedir crecimiento de memoria ante datos corruptos.
+Es un buffer fijo: el analisis no reserva memoria por trama, no vuelve a buscar
+delimitadores en bytes ya examinados y conserva solo la trama parcial restante.
 
 ## Salida
 
@@ -33,8 +35,25 @@ Cuando no existe una frecuencia vigente y `polling` esta habilitado, se envia
 `FA;` al K3. Si no llega respuesta, se reintenta una vez por segundo. Una
 respuesta `IF` o `FA` valida cancela inmediatamente la necesidad de polling.
 
+El monitor distingue dato vigente, polling propio pendiente y dato recibido
+tras una consulta propia. Un dato vigente no implica actividad CAT externa.
+Como las tramas no incluyen un identificador de consulta, "recibido tras polling"
+describe el orden observado; no garantiza que la trama corresponda a esa consulta
+si otros programas estan usando CAT simultaneamente.
+
 ## Recuperacion
 
 Si un puerto no puede abrirse o se desconecta, CAT Pacer mantiene el proceso
 activo y reintenta la conexion cada dos segundos. No acumula una cola de datos:
 solo conserva la frecuencia valida mas reciente.
+
+## Monitor de Windows
+
+La ventana y el icono de bandeja observan el estado del bucle CAT. No modifican
+la frecuencia ni los intervalos. Usan un hilo separado y una cola de un solo
+elemento; si el monitor esta ocupado, se omite la actualizacion visual. Abrir
+un menu o arrastrar la ventana no bloquea el hilo serie. La opcion **Salir**
+solicita el mismo cierre ordenado que Ctrl+C.
+El texto del ultimo evento se comparte mediante `Arc<str>`: publicar el estado
+no duplica ese texto en el hilo serie. Los textos de pantalla se forman en el
+hilo de interfaz.

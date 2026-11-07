@@ -1,0 +1,22 @@
+# CAT Pacer - copiar como config.toml junto al ejecutable.
+
+# Puerto CAT del Elecraft K3 y velocidad en baudios.
+rx_port = "COM4"
+rx_baud = 38400
+
+# Puerto hacia el Expert 1K3FA y velocidad en baudios.
+tx_port = "COM6"
+tx_baud = 4800
+
+# Vigencia de la frecuencia recibida, en segundos.
+# Mientras sea vigente, no se solicita polling propio.
+ex_data = 1.0
+
+# Intervalo minimo entre envios al amplificador, en segundos.
+tx_time = 1.0
+
+# Consultar FA; solo cuando no haya una frecuencia vigente.
+polling = true
+
+# Abrir el puerto de salida y dosificar la frecuencia al amplificador.
+repeater = true
