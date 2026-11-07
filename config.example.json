@@ -1,0 +1,10 @@
+{
+  "rx_port": "COM4",
+  "rx_baud": 38400,
+  "tx_port": "COM6",
+  "tx_baud": 4800,
+  "ex_data": 1,
+  "tx_time": 1,
+  "polling": true,
+  "repeater": true
+}

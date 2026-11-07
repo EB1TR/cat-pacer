@@ -3,6 +3,7 @@
 venv/
 build/
 dist/
+target/
 
 # Ficheros excluídos
 config.json
